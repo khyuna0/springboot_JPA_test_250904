@@ -19,15 +19,19 @@ public interface QuestionRepository extends JpaRepository<Questiontbl, Long>{ //
 	public List<Questiontbl> findAllByOrderByQdateDesc();
 	
 	// 두 조건이 일치하는 질문 글 조회하기
-	public Questiontbl findAllByQnumAndQtitle(Long qnum, String qtitle);
+	public Questiontbl findByQnumAndQtitle(Long qnum, String qtitle);
 	
-	// 제목이 정확히 일치하는 질문글들을 조회
-	public List<Questiontbl> findAllByQtitle(String qtitle);
+	// 제목이 정확히 일치하는 질문글들 조회
+	public List<Questiontbl> findAllByQtitle(String qtitle); // 글 n개 검색 -> list 타입으로 반환 
+	
+	// find, findAll 차이
+	// findAll : 여러개가 반환되는 경우 무조건 list 타입으로, find : 하나의 엔티티로 받을수도, list 타입으로 받을수도 있음 
+	// find - 하나의 엔티티 타입으로 지정했는데, 여러 개가 반환될 경우 에러 발생
 	
 	// 제목에 특정 문자가 존재하면 조회하기 -> like , 최근 글이 위로 오도록 정렬
 	public List<Questiontbl> findAllByQtitleLikeOrderByQdateDesc(String keyword);
 	
-	// SQL문 직접 쓰는 방법 (JPA sql 문)
+	// SQL문 직접 쓰는 방법 (JPA SQL 문 : JPQL )
 	// 실제 테이블 이름이 아닌 엔티티 이름 작성 (Questiontbl)
 	// * 안됨 : q, q.필드이름 사용하기
 	

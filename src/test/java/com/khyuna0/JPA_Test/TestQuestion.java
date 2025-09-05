@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,8 +16,12 @@ import com.khyuna0.JPA_Test.entity.Questiontbl;
 import com.khyuna0.JPA_Test.repository.QuestionRepository;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) 
+// @TestMethodOrder - test 유닛 안 메서드 실행되는 순서 정하기 : @Order(n)으로 순서 지정
 public class TestQuestion {
 
+	// 테스트 메서드끼리는 결합도가 낮은게 좋다
+	
 	@Autowired
 	private QuestionRepository questionRepository;
 	
@@ -104,7 +110,7 @@ public class TestQuestion {
 		}
 		
 		// select * from jpaquestiontbl where qnum=1 and qtitle=홍길동
-		Questiontbl question1 = questionRepository.findAllByQnumAndQtitle(4L, "홍길동");
+		Questiontbl question1 = questionRepository.findByQnumAndQtitle(4L, "홍길동");
 		System.out.println("글번호가 8번이고 글제목이 홍길동인 레코드 :"+question1.getQnum());
 		
 		
