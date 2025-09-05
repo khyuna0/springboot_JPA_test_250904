@@ -124,6 +124,12 @@ public class TestQuestion {
 			
 			System.out.println("--------------------------");
 		}
+		
+		// 직접 쓴 SQL 문 (@Query 사용) 으로 조회
+		Questiontbl questiontbl = questionRepository.findQuestionByQnum(4L);
+		System.out.println(questiontbl.getQnum());
+		System.out.println(questiontbl.getQtitle());
+		
 	}
 	
 	

@@ -3,6 +3,8 @@ package com.khyuna0.JPA_Test.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.khyuna0.JPA_Test.entity.Questiontbl;
@@ -24,6 +26,13 @@ public interface QuestionRepository extends JpaRepository<Questiontbl, Long>{ //
 	
 	// 제목에 특정 문자가 존재하면 조회하기 -> like , 최근 글이 위로 오도록 정렬
 	public List<Questiontbl> findAllByQtitleLikeOrderByQdateDesc(String keyword);
+	
+	// SQL문 직접 쓰는 방법
+	// 실제 테이블 이름이 아닌 엔티티 이름 작성 (Questiontbl)
+	// * 안됨 : q, q.필드이름 사용
+	// @param 어노테이션 사용해서 파라미터 명시
+	@Query("SELECT q FROM Questiontbl q WHERE q.qnum = :qnum")
+	public Questiontbl findQuestionByQnum(@Param("qnum") Long qnum);
 	
 	
 }
