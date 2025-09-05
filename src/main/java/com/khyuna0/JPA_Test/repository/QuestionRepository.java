@@ -3,6 +3,7 @@ package com.khyuna0.JPA_Test.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,5 +62,14 @@ public interface QuestionRepository extends JpaRepository<Questiontbl, Long>{ //
 	// 질문 글 번호가 특정 값 이상인 질문들만 조회 ( GreaterThan : 초과 )
 	public List<Questiontbl> findByQnumGreaterThanEqual(Long qnum);
 	
+	// 질문 업데이트
+	@Modifying
+	@Transactional
+	@Query("UPDATE Questiontbl q SET q.qcontent= :qcontent WHERE q.qnum = :qnum")
+	public int updateQcontentByQnum(@Param("qcontent") String qcontent, @Param("qnum")Long qnum);
 	
+	// Native SQL문(오리지널 SQL문) 쓰기
+	@Modifying
+	@Query(value = "UPDATE Questiontbl SET qcontent= :qcontent WHERE qnum = :qnum", nativeQuery = true)
+	public int updateQcontentNativeByQnum(@Param("qcontent") String qcontent, @Param("qnum")Long qnum); 
 }
