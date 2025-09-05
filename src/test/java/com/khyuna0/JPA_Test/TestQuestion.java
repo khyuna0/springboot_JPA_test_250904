@@ -91,6 +91,7 @@ public class TestQuestion {
 		Optional<Questiontbl> questionOption = questionRepository.findById(4L); //기본키로 검색
 		// select * from jpaquestiontbl where qnum=4
 		
+		// id (PK) 로 찾을 때는 Optional 사용
 		// 기본키로 검색했을 경우 레코드가 1개 또는 존재하지 않는 경우 발생
 		// Option<Questiontbl> 형태로 반환 타입을 정해야 한다
 		// isPresent() 를 활요하면 Option<Questiontbl> 내에 객체의 존재여부를 알수가 있다.
