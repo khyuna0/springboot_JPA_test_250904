@@ -27,12 +27,35 @@ public interface QuestionRepository extends JpaRepository<Questiontbl, Long>{ //
 	// 제목에 특정 문자가 존재하면 조회하기 -> like , 최근 글이 위로 오도록 정렬
 	public List<Questiontbl> findAllByQtitleLikeOrderByQdateDesc(String keyword);
 	
-	// SQL문 직접 쓰는 방법
+	// SQL문 직접 쓰는 방법 (JPA sql 문)
 	// 실제 테이블 이름이 아닌 엔티티 이름 작성 (Questiontbl)
-	// * 안됨 : q, q.필드이름 사용
+	// * 안됨 : q, q.필드이름 사용하기
+	
 	// @param 어노테이션 사용해서 파라미터 명시
 	@Query("SELECT q FROM Questiontbl q WHERE q.qnum = :qnum")
 	public Questiontbl findQuestionByQnum(@Param("qnum") Long qnum);
+	
+	// 질문 제목에 특정 문자가 들어있는 질문 글 조회
+	@Query("SELECT q FROM Questiontbl q WHERE q.qtitle LIKE %:qtitle%")
+	public Questiontbl findQuestionByQtitle(@Param("qtitle") String qtitle);
+	
+	// 질문 글 번호가 특정 값보다 큰 질문 글만 조회
+	@Query("SELECT q FROM Questiontbl q WHERE q.qnum >= :number")
+	public Questiontbl findQuestionByQnumber(@Param("number") Long number);
+	
+	// Native SQL문(오리지널 SQL문) 쓰기
+	// 오리지널 SQL 문은 진짜 테이블 이름 (DB 테이블 이름)
+	// @param 어노테이션 사용해서 파라미터 명시 방법은 동일
+	@Query(value = "SELECT * FROM jspquestiontbl WHERE qnum= :qnum", nativeQuery = true)
+	public Questiontbl findQuestionNativeByQnum(@Param("qnum") Long qnum); 
+	
+	// 기타 JPA 문법
+	
+	// 해당 레코드의 존재 여부 확인
+	public boolean existsByQnum(Long qnum); // qnum이 존재하는 번호면 T 반환
+	
+	// 질문 글 번호가 특정 값 이상인 질문들만 조회 ( GreaterThan : 초과 )
+	public List<Questiontbl> findByQnumGreaterThanEqual(Long qnum);
 	
 	
 }
