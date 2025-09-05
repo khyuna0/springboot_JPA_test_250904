@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity // 엔티티 클래스로 설정함
-@Table (name = "jpaquestiontbl") // 실제로 매핑될 데이터베이스의 테이블 이름 설정
+@Table (name = "jpaquestiontbl") // 실제로 매핑될 데이터베이스의 테이블 이름 설정, 생략하면 클래스 이름으로 설정됨
 @SequenceGenerator (
 		name= "QUESTION_SEQ_GENERATOR", // JPA 내부 시퀀스 이름
 		sequenceName ="QUESTION_SEQ", // 실제 DB에 있는 시퀀스 이름 
@@ -35,7 +35,7 @@ public class Questiontbl {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTION_SEQ_GENERATOR") //
 	private Long qnum; // 질문 번호, PK, 시퀀스로 자동증가 (시퀀스 미리 생성, 테이블 어노테이션 바로 밑에서 설정)
 	
-	@Column (name = "qtitle", length = 20, nullable = false)
+	@Column (name = "qtitle", length = 20, nullable = false )
 	private String qtitle; // 질문 제목
 	
 	@Column (name = "qcontent", length = 200, nullable = false)
